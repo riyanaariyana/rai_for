@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Close menu on link click
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
             if (hamburger && navMenu) {
@@ -27,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
-
 
     /* =========================
        NAVBAR SCROLL EFFECT
@@ -40,16 +38,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-
     /* =========================
        SMOOTH SCROLL
     ========================= */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-
             const target = document.querySelector(this.getAttribute('href'));
-
             if (target) {
                 target.scrollIntoView({
                     behavior: 'smooth',
@@ -58,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
-
 
     /* =========================
        SCROLL ANIMATION
@@ -83,24 +77,16 @@ document.addEventListener("DOMContentLoaded", () => {
         observer.observe(el);
     });
 
-
     /* =========================
        SCROLL TO TOP BUTTON
     ========================= */
     const scrollBtn = document.getElementById("scrollTopBtn");
 
     if (scrollBtn) {
-
-        // يظهر عند النزول
         window.addEventListener("scroll", () => {
-            if (window.scrollY > 300) {
-                scrollBtn.style.display = "block";
-            } else {
-                scrollBtn.style.display = "none";
-            }
+            scrollBtn.style.display = window.scrollY > 300 ? "block" : "none";
         });
 
-        // يرجع للأعلى
         scrollBtn.addEventListener("click", () => {
             window.scrollTo({
                 top: 0,
@@ -108,47 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
-
-
-    /* =========================
-       CONTACT FORM
-    ========================= */
-    const quoteForm = document.getElementById('quoteForm');
-
-    if (quoteForm) {
-        quoteForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const name = this.name.value.trim();
-            const email = this.email.value.trim();
-            const message = this.message.value.trim();
-
-            if (!name || !email || !message) {
-                showNotification("Please fill all required fields ❌", "error");
-                return;
-            }
-
-            if (!validateEmail(email)) {
-                showNotification("Invalid email address ❌", "error");
-                return;
-            }
-
-            const btn = this.querySelector('button');
-            const originalText = btn.innerText;
-
-            btn.innerText = "Sending...";
-            btn.disabled = true;
-
-            setTimeout(() => {
-                showNotification("Quote sent successfully 🚚", "success");
-
-                this.reset();
-                btn.innerText = originalText;
-                btn.disabled = false;
-            }, 1500);
-        });
-    }
-
 
     /* =========================
        HERO COUNTERS
@@ -182,7 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
         counterObserver.observe(counter);
     });
 
-
     /* =========================
        PARALLAX HERO
     ========================= */
@@ -195,8 +139,52 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-});
+    /* =========================
+       CONTACT FORM (EmailJS)
+    ========================= */
+    const quoteForm = document.getElementById("quoteForm");
 
+    if (quoteForm) {
+        quoteForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const name = this.name.value.trim();
+            const email = this.email.value.trim();
+            const message = this.message.value.trim();
+
+            if (!name || !email || !message) {
+                showNotification("Please fill all fields ❌", "error");
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                showNotification("Invalid email ❌", "error");
+                return;
+            }
+
+            const btn = this.querySelector("button");
+            const originalText = btn.innerText;
+
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+
+            emailjs.sendForm("service_p7qyvbj", ""template_51nhbma", this)
+            .then(() => {
+                showNotification("Message sent successfully ✅", "success");
+                this.reset();
+            })
+            .catch((error) => {
+                showNotification("Error sending message ❌", "error");
+                console.log(error);
+            })
+            .finally(() => {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            });
+        });
+    }
+
+});
 
 /* =========================
    EMAIL VALIDATION
@@ -206,23 +194,12 @@ function validateEmail(email) {
     return re.test(email);
 }
 
+/* =========================
+   EMAILJS INIT
+========================= */
 (function(){
-    emailjs.init("gCL2GdMeQnoH5hXUR"); // ضع المفتاح الخاص بك
+    emailjs.init("gCL2GdMeQnoH5hXUR"); // Public Key
 })();
-
-document.getElementById("quoteForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    emailjs.sendForm("service_p7qyvbj", "template_xxxxxxx", this)
-    .then(function() {
-        alert("Message sent successfully!");
-    }, function(error) {
-        alert("Error sending message");
-        console.log(error);
-    });
-});
-
-
 
 /* =========================
    NOTIFICATION SYSTEM
