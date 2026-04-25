@@ -4,74 +4,338 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TransLogix Solutions - Professional Transportation & Logistics</title>
-    <meta name="description" content="Reliable transportation and logistics contracting services.">
-    
+    <meta name="description" content="Reliable transportation and logistics contracting services. Full truckload, LTL, warehousing, and supply chain solutions.">
     <link rel="stylesheet" href="style.css">
-
-    <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-
-<!-- ================= NAV ================= -->
-<nav class="navbar">
-    <div class="nav-container">
-        <div class="nav-logo">
-            <img src="images/logo.png" alt="Logo" class="logo">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+             <div class="nav-logo">
+                  <img src="images/logo.png" alt="TransLogix Logo" class="logo">
+              </div>
+         
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#services" class="nav-link">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#fleet" class="nav-link">Fleet</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
+    </nav>
 
-        <ul class="nav-menu">
-            <li><a href="#home" class="nav-link">Home</a></li>
-            <li><a href="#services" class="nav-link">Services</a></li>
-            <li><a href="#about" class="nav-link">About</a></li>
-            <li><a href="#fleet" class="nav-link">Fleet</a></li>
-            <li><a href="#contact" class="nav-link">Contact</a></li>
-        </ul>
-
-        <div class="hamburger">
-            <span></span><span></span><span></span>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Solutions fiables de transport et de logistique</h1>
+            <p class="hero-subtitle">Votre partenaire de confiance pour les services de transport complet (FTL) et les services spécialisés de fret à travers tout le territoire national.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary">Contactez-nous</a>
+                <a href="#services" class="btn btn-secondary">Nos services</a>
+            </div>
         </div>
+        <div class="hero-stats">
+            <div class="stat">
+                <h3>50K+</h3>
+                <p>Shipments Delivered</p>
+            </div>
+            <div class="stat">
+                <h3>99.8%</h3>
+                <p>On-Time Delivery</p>
+            </div>
+            <div class="stat">
+                <h3>500+</h3>
+                <p>Happy Clients</p>
+            </div>
+        </div>
+    </section>
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-truck-loading"></i>
+                    </div>
+                    <h3>Services de location</h3>
+                    <p>Nous proposons des solutions de location de camions et de véhicules logistiques adaptées à tous vos besoins de transport avec flexibilité et efficacité.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>Groupage</h3>
+                    <p>Services de groupage permettant de consolider plusieurs petites expéditions en un seul envoi afin de réduire les coûts et optimiser le transport</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-warehouse"></i>
+                    </div>
+                    <h3>Warehousing</h3>
+                    <p>Secure storage solutions with inventory management and order fulfillment capabilities.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h3>Stockage</h3>
+                    <p>Solutions de stockage sécurisées avec une gestion efficace des stocks et une protection optimale des marchandises.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-temperature-high"></i>
+                    </div>
+                    <h3>Livraison</h3>
+                    <p>Services de livraison rapides et fiables garantissant l’acheminement de vos marchandises dans les délais prévus.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                      <h3>Distribution</h3>
+                      <p>Organisation et gestion de la distribution des marchandises à travers différentes régions avec une grande efficacité.</p>
+                </div>
+                <div class="service-card">
+                       <div class="service-icon">
+                          <i class="fas fa-handshake"></i>
+                       </div>
+                      <h3>Agence</h3>
+                      <p>Représentation des clients et prise en charge des démarches logistiques et administratives liées au transport.</p>
+                </div>
+
+                <div class="service-card">
+                   <div class="service-icon">
+                     <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h3>Commission de transport</h3>
+                    <p>Services d’intermédiation pour organiser les opérations de transport aux meilleures conditions et tarifs.</p>
+                </div>
+
+                <div class="service-card">
+                 <div class="service-icon">
+                  <i class="fas fa-people-carry"></i>
+                  </div>
+                     <h3>Courtage en fret</h3>
+                     <p>Mise en relation entre expéditeurs et transporteurs afin de garantir des opérations de transport rapides et efficaces.</p>
+                  </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Pourquoi choisir SARL RAIFOR ?</h2>
+                    <p>Depuis 2024, nous offrons des solutions modernes, fiables et efficaces en transport et logistique, conçues pour répondre parfaitement aux besoins de votre entreprise.</p>                    <div class="features-grid">
+                        <div class="feature">
+                           <i class="fas fa-shield-alt"></i>
+                           <h4>Assuré et agréé</h4>
+                            <p>Entièrement assuré avec autorisation DOT et MC.</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-clock"></i>
+                           <h4>Support 24h/24 et 7j/7</h4>
+                           <p>Service client et suivi disponibles à tout moment.</p>
+                        </div>
+                        <div class="feature">
+                          <i class="fas fa-mobile-alt"></i>
+                          <h4>Suivi en temps réel</h4>
+                          <p>Suivi GPS avec mises à jour en direct des expéditions.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="images/LGMTRM.jpeg" alt="Logistics Truck">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fleet Section -->
+    <section id="fleet" class="fleet">
+        <div class="container">
+            <h2 class="section-title">Notre flotte</h2>
+            <div class="fleet-grid">
+                <div class="fleet-item">
+                    <img src="images/rai.jpeg" alt="Flatbed Trailer">
+                    <div class="fleet-info">
+                        <h3>camion semi-remorque benne</h3>
+                        <p>Remorques de 53 pieds à suspension pneumatique pour le transport de marchandises générales.</p>
+                        <span>50+ units</span>
+                    </div>
+                </div>
+                <div class="fleet-item">
+                    <img src="images/rai.jpeg" alt="Flatbed Trailer">
+                    <div class="fleet-info">
+                        <h3>Camion semi-remorque à blateau</h3>
+                        <p>Véhicule de transport équipé d’une semi-remorque à plateau, utilisé pour le transport de marchandises lourdes et volumineuses ne nécessitant pas de couverture.</p>
+                        <span>40+ units</span>
+                    </div>
+                </div>
+                <div class="fleet-item">
+                    <img src="images/LGMTRM.jpeg" alt="Reefer Trailer">
+                    <div class="fleet-info">
+                        <h3>Camions frigorifiques</h3>
+                        <p>Transport à température contrôlée.</p>
+                        <span>10+ units</span>
+                    </div>
+                </div>
+                <div class="fleet-item">
+                    <img src="images/LGMTRM.jpeg" alt="Reefer Trailer">
+                    <div class="fleet-info">
+                        <h3>Camion semi-remorque Porte-engen</h3>
+                        <p>Véhicule de transport équipé d’une semi-remorque spécialement conçue pour le transport d’engins et de matériels lourds tels que les bulldozers et les excavatrices</p>
+                        <span>10+ units</span>
+                    </div>
+                </div>
+                <div class="fleet-item">
+                    <img src="images/LGMTRM.jpeg" alt="Reefer Trailer">
+                    <div class="fleet-info">
+                        <h3>Camion à benne</h3>
+                        <p>Véhicule équipé d’une benne basculante pour le transport et le déchargement de matériaux en vrac tels que le sable, le gravier et les déchets de construction, avec une capacité de charge allant jusqu’à 15 tonnes.</p>
+                        <span>20+ units</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coverage Map -->
+    <section class="coverage">
+        <div class="container">
+            <h2>SARL RAI FOR </h2>
+            <p>spécialisée dans le transport et la logistique, offrant des solutions fiables, rapides et adaptées aux besoins de ses clients. Grâce à son expertise et à son</p>
+           <p> L’entreprise est dirigée par son fondateur, un professionnel expérimenté dans le domaine du transport, qui veille au développement continu de l’entreprise et à l’amélioration constante de ses services. </p>
+            <div class="map-container">
+                <img src="images/boss.jpeg" alt="Coverage Map" class="coverage-map">
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get a Free Quote</h2>
+            <p class="section-subtitle">Contact us today for competitive rates and personalized service.</p>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>(+213) 660 71 21 35 / 770 93 72 02</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>raifor318@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>Rue halitim khaled - BARIKA </br>
+                               <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2524.2883389074163!2d5.370829425330125!3d35.3860526726839!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12f4c100107dbb55%3A0xa130d955da2961d0!2sSARL%20RAI%20FOR!5e1!3m2!1sar!2sdz!4v1776774424869!5m2!1sar!2sdz" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+              <form class="contact-form" id="quoteForm">
+    <div class="form-group">
+        <input type="text" name="name" placeholder="Votre nom" required>
     </div>
-</nav>
 
-<!-- ================= HERO ================= -->
-<section id="home" class="hero">
-    <div class="hero-content">
-        <h1>Solutions fiables de transport et de logistique</h1>
-        <p>Votre partenaire de confiance pour le transport.</p>
+    <div class="form-group">
+        <input type="email" name="email" placeholder="Votre e-mail" required>
     </div>
-</section>
 
-<!-- ================= CONTACT ================= -->
-<section id="contact" class="contact">
-    <div class="container">
-
-        <h2>Contactez-nous</h2>
-
-        <form id="quoteForm">
-
-            <input type="text" name="from_name" placeholder="Votre nom" required>
-            <input type="email" name="from_email" placeholder="Votre e-mail" required>
-            <input type="text" name="company" placeholder="Entreprise">
-            <input type="tel" name="phone" placeholder="Téléphone">
-
-            <textarea name="message" placeholder="Votre message..." required></textarea>
-
-            <button type="submit">Envoyer</button>
-
-        </form>
-
+    <div class="form-group">
+        <input type="text" name="company" placeholder="Nom de l'entreprise">
     </div>
-</section>
 
-<!-- ================= FOOTER ================= -->
-<footer>
-    <p>© 2024 TransLogix Solutions</p>
-</footer>
+    <div class="form-group">
+        <input type="tel" name="phone" placeholder="Numéro de téléphone">
+    </div>
+
+    <div class="form-group full-width">
+        <textarea name="message" rows="5" placeholder="Parlez-nous de vos besoins en transport..." required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary full-width">
+        Request a Quote
+    </button>
+</form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                         <img src="images/logo.png" alt="TransLogix Logo" class="logo">
+                    </div>
+                    <p>Your trusted logistics partner delivering excellence across North America.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#fleet">Fleet</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li>Full Truckload</li>
+                        <li>LTL Freight</li>
+                        <li>Warehousing</li>
+                        <li>Supply Chain</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-phone"></i> (+213) 660 71 21 35 / 770 93 72 02 </p>
+                    <p><i class="fas fa-envelope"></i> raifor318@gmail.com </p>
+                    <p><i class="fas fa-map-marker-alt"></i> Rue halitim khaled - BARIKA </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TransLogix Solutions. All rights reserved. | DOT #1234567 | MC #789012</p>
+            </div>
+        </div>
+    </footer>
 
 <!-- ✅ EmailJS (لازم يكون قبل script.js) -->
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
