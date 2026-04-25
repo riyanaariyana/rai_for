@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Close mobile menu when clicking nav links
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
             if (hamburger && navMenu) {
@@ -32,11 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
     ========================= */
     const navbar = document.querySelector('.navbar');
 
-    window.addEventListener('scroll', () => {
+    window.addEventListener('scroll', throttle(() => {
         if (navbar) {
             navbar.classList.toggle('scrolled', window.scrollY > 50);
         }
-    });
+    }, 10));
 
     /* =========================
        SMOOTH SCROLL
@@ -50,6 +51,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     behavior: 'smooth',
                     block: 'start'
                 });
+                
+                // Close mobile menu on link click
+                if (hamburger && navMenu) {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.classList.remove('no-scroll');
+                }
             }
         });
     });
@@ -58,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
        SCROLL ANIMATION
     ========================= */
     const animatedElements = document.querySelectorAll(
-        '.service-card, .fleet-item, .feature, .stat, .about-text, .contact-info'
+        '.service-card, .fleet-item, .feature, .stat, .about-text, .contact-item'
     );
 
     const observer = new IntersectionObserver((entries) => {
@@ -68,12 +76,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 entry.target.style.transform = "translateY(0)";
             }
         });
-    }, { threshold: 0.1 });
+    }, { 
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
 
     animatedElements.forEach(el => {
         el.style.opacity = "0";
-        el.style.transform = "translateY(30px)";
-        el.style.transition = "all 0.6s ease";
+        el.style.transform = "translateY(40px)";
+        el.style.transition = "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
         observer.observe(el);
     });
 
@@ -83,9 +94,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const scrollBtn = document.getElementById("scrollTopBtn");
 
     if (scrollBtn) {
-        window.addEventListener("scroll", () => {
-            scrollBtn.style.display = window.scrollY > 300 ? "block" : "none";
-        });
+        window.addEventListener("scroll", throttle(() => {
+            scrollBtn.style.opacity = window.scrollY > 300 ? "1" : "0";
+            scrollBtn.style.visibility = window.scrollY > 300 ? "visible" : "hidden";
+        }, 10));
 
         scrollBtn.addEventListener("click", () => {
             window.scrollTo({
@@ -101,28 +113,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const counters = document.querySelectorAll('.stat h3');
 
     counters.forEach(counter => {
-        let target = parseInt(counter.innerText.replace(/\D/g, ''));
-        let current = 0;
-        let increment = target / 100;
-
-        const updateCounter = () => {
-            if (current < target) {
-                current += increment;
-                counter.innerText = Math.floor(current) + (counter.innerText.includes('%') ? '%' : '+');
-                requestAnimationFrame(updateCounter);
-            } else {
-                counter.innerText = target + (counter.innerText.includes('%') ? '%' : '+');
-            }
-        };
-
         const counterObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    updateCounter();
-                    counterObserver.unobserve(counter);
+                    animateCounter(counter);
+                    counterObserver.unobserve(entry.target);
                 }
             });
-        });
+        }, { threshold: 0.7 });
 
         counterObserver.observe(counter);
     });
@@ -131,26 +129,31 @@ document.addEventListener("DOMContentLoaded", () => {
        PARALLAX HERO
     ========================= */
     const hero = document.querySelector('.hero');
-
-    window.addEventListener('scroll', () => {
-        if (hero) {
-            let offset = window.scrollY;
-            hero.style.transform = `translateY(${offset * 0.3}px)`;
-        }
-    });
+    if (hero) {
+        window.addEventListener('scroll', throttle(() => {
+            const scrolled = window.scrollY;
+            const rate = scrolled * -0.5;
+            hero.style.transform = `translateY(${rate}px)`;
+        }, 16));
+    }
 
     /* =========================
-       CONTACT FORM (EmailJS)
+       CONTACT FORM
     ========================= */
     const quoteForm = document.getElementById("quoteForm");
 
     if (quoteForm) {
         quoteForm.addEventListener("submit", function(e) {
             e.preventDefault();
+            
+            const formData = new FormData(this);
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
 
-            const name = this.name.value.trim();
-            const email = this.email.value.trim();
-            const message = this.message.value.trim();
+            // Validation
+            const name = formData.get('name')?.trim();
+            const email = formData.get('email')?.trim();
+            const message = formData.get('message')?.trim();
 
             if (!name || !email || !message) {
                 showNotification("Please fill all fields ❌", "error");
@@ -158,84 +161,167 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (!validateEmail(email)) {
-                showNotification("Invalid email ❌", "error");
+                showNotification("Please enter a valid email ❌", "error");
                 return;
             }
 
-            const btn = this.querySelector("button");
-            const originalText = btn.innerText;
+            // Show loading state
+            submitBtn.innerHTML = '<span class="spinner"></span> Sending...';
+            submitBtn.disabled = true;
 
-            btn.innerText = "Sending...";
-            btn.disabled = true;
-
-            emailjs.sendForm("service_p7qyvbj", ""template_51nhbma", this)
-            .then(() => {
-                showNotification("Message sent successfully ✅", "success");
-                this.reset();
-            })
-            .catch((error) => {
-                showNotification("Error sending message ❌", "error");
-                console.log(error);
-            })
-            .finally(() => {
-                btn.innerText = originalText;
-                btn.disabled = false;
-            });
+            // EmailJS - FIXED TEMPLATE ID
+            emailjs.sendForm('service_p7qyvbj', 'template_51nhbma', this)
+                .then(() => {
+                    showNotification("Message sent successfully! 🎉", "success");
+                    this.reset();
+                })
+                .catch((error) => {
+                    console.error('EmailJS Error:', error);
+                    showNotification("Failed to send message. Please try again. ❌", "error");
+                })
+                .finally(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
         });
     }
-
 });
 
 /* =========================
-   EMAIL VALIDATION
+   UTILITY FUNCTIONS
 ========================= */
+
+/**
+ * Throttle function to limit scroll event calls
+ */
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
+
+/**
+ * Email validation
+ */
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
+    return re.test(String(email).toLowerCase());
+}
+
+/**
+ * Animate counter numbers
+ */
+function animateCounter(counter) {
+    const target = parseInt(counter.textContent.replace(/[^\d]/g, ''));
+    let current = 0;
+    const increment = target / (target > 100 ? 200 : 100);
+    const suffix = counter.textContent.includes('%') ? '%' : '+';
+    
+    const updateCounter = () => {
+        if (current < target) {
+            current += increment;
+            counter.textContent = Math.ceil(current) + suffix;
+            requestAnimationFrame(updateCounter);
+        } else {
+            counter.textContent = target + suffix;
+        }
+    };
+    
+    updateCounter();
 }
 
 /* =========================
    EMAILJS INIT
 ========================= */
 (function(){
-    emailjs.init("gCL2GdMeQnoH5hXUR"); // Public Key
+    emailjs.init({
+        publicKey: 'gCL2GdMeQnoH5hXUR'
+    });
 })();
 
 /* =========================
    NOTIFICATION SYSTEM
 ========================= */
 function showNotification(message, type = "info") {
+    // Remove existing notifications
+    document.querySelectorAll('.notification').forEach(n => n.remove());
+
     const notification = document.createElement("div");
+    notification.className = `notification notification--${type}`;
+    notification.innerHTML = `
+        <span>${message}</span>
+        <button class="notification__close">&times;</button>
+    `;
 
-    notification.className = "notification";
-    notification.innerText = message;
+    // Styles
+    Object.assign(notification.style, {
+        position: 'fixed',
+        top: '100px',
+        right: '20px',
+        padding: '16px 24px',
+        borderRadius: '12px',
+        color: '#fff',
+        fontWeight: '500',
+        fontSize: '14px',
+        zIndex: '9999',
+        boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+        transform: 'translateX(400px)',
+        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255,255,255,0.2)',
+        maxWidth: '350px'
+    });
 
-    notification.style.position = "fixed";
-    notification.style.top = "100px";
-    notification.style.right = "20px";
-    notification.style.padding = "15px 20px";
-    notification.style.borderRadius = "10px";
-    notification.style.color = "#fff";
-    notification.style.zIndex = "9999";
-    notification.style.transition = "0.3s ease";
-    notification.style.transform = "translateX(300px)";
-
-    if (type === "success") {
-        notification.style.background = "#28a745";
-    } else if (type === "error") {
-        notification.style.background = "#dc3545";
-    } else {
-        notification.style.background = "#2c5aa0";
-    }
+    // Type-specific backgrounds
+    const colors = {
+        success: '#10b981',
+        error: '#ef4444',
+        info: '#3b82f6'
+    };
+    notification.style.background = colors[type] || colors.info;
 
     document.body.appendChild(notification);
 
+    // Animate in
     requestAnimationFrame(() => {
-        notification.style.transform = "translateX(0)";
+        notification.style.transform = 'translateX(0)';
     });
 
+    // Close button
+    const closeBtn = notification.querySelector('.notification__close');
+    closeBtn.style.cssText = `
+        background: none;
+        border: none;
+        color: inherit;
+        font-size: 20px;
+        cursor: pointer;
+        margin-left: 12px;
+        padding: 0;
+        line-height: 1;
+        opacity: 0.8;
+        transition: opacity 0.2s;
+    `;
+
+    closeBtn.addEventListener('click', () => {
+        notification.style.transform = 'translateX(400px)';
+        setTimeout(() => notification.remove(), 400);
+    });
+
+    closeBtn.addEventListener('mouseenter', () => closeBtn.style.opacity = '1');
+    closeBtn.addEventListener('mouseleave', () => closeBtn.style.opacity = '0.8');
+
+    // Auto remove
     setTimeout(() => {
-        notification.style.transform = "translateX(300px)";
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
+        if (notification.parentNode) {
+            notification.style.transform = 'translateX(400px)';
+            setTimeout(() => notification.remove(), 400);
+        }
+    }, 4000);
 }
